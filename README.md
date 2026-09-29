@@ -6,6 +6,11 @@
 > 本包输出含启发式表达层（九维概率云 / 卦象 / 沙盘概率），**不构成投资建议，
 > 不预测涨跌，不承诺收益**。具体决策与风险由个人承担。
 
+**发布与存档**
+- PyPI：`pip install sfw-cognitive` → <https://pypi.org/project/sfw-cognitive/>
+- 源码（GitHub，开源）：<https://github.com/q1z2q3-debug/sfw-cognitive>
+- 存档（Zenodo · DOI 10.5281/zenodo.23040435）：<https://zenodo.org/record/23040435>
+
 ---
 
 ## 1. 安装
