@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+.pytest_cache/
+
+# 输出产物
+report.md
+result.json
+sfw_result.json
+output/
+data/auto_*.yaml
+
+# 环境
+.venv/
+venv/

@@ -1,0 +1,14 @@
+# Docker 构建上下文排除
+.git
+.github
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+report.md
+result.json
+tests/

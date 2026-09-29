@@ -1,0 +1,116 @@
+# 平安银行（000001.SZ）示例输入数据
+# 说明：引擎只读该文件；所有数值均有来源与日期（见 source 段）。
+
+meta:
+  stock: 平安银行
+  code: 000001.SZ
+  as_of: 2026-09-29
+  currency: CNY
+  bear_cases:
+    - "零售信贷扩张乏力：个人贷款余额与上年末持平，主要靠结构优化而非规模增长"
+    - "前瞻性资产质量隐忧：逾期60天以上偏离度 0.67→0.84，报表不良口径偏宽松"
+    - "资本补充压力：资本充足率下降，受赎回优先股影响"
+  falsification:
+    - "逾期60天以上贷款偏离度升至 1.0 以上"
+    - "不良贷款率升至 1.15% 以上"
+    - "净息差跌破 1.70%"
+
+market:
+  price: 11.35            # 收盘价（元）
+  pe_ttm: 5.07            # 市盈率(TTM)
+  pb: 0.47                # 市净率
+  dividend_yield: 5.27    # 股息率(TTM, %)
+  market_cap: 2202.57     # 总市值（亿元）
+  volatility_annual: 0.25 # 年化波动率（估算）
+
+# 九维评分指标（-1/0/+1；缺失指标按中性 0 处理并在报告中标注）
+scoring:
+  天:    { policy: 1, macro: 0, liquidity: 1, geopolitics: 0 }
+  地:    { pe_percentile: 1, pb_percentile: 1, roe_trend: 1, revenue_growth: 0, profit_growth: 1, cashflow_quality: 1 }
+  人:    { northbound: 0, margin_balance: -1, main_capital: 0, turnover: 0 }
+  正:    { ma_arrange: -1, macd: -1, rsi: 0, breakout: 0 }
+  反:    { valuation_extreme: 1, oversold: 0, chip_concentration: 1, reversal_signal: 0 }
+  合:    { factor_resonance: 0, cross_modal: 0, signal_strength: 0 }
+  归:    { industry_cycle: 1, seasonality: 1, historical_similar: 0 }
+  守:    { debt_ratio: 0, interest_bearing_ratio: 0, goodwill: 1, pledge: 0, compliance: 1 }
+  进:    { catalyst_strength: 1, catalyst_time: 1, profit_elasticity: 0, consensus: 1 }
+
+# 银行专项指标（用于 bank_special_scoring）
+bank_special:
+  net_interest_margin: 1.80
+  npl_ratio: 1.05
+  provision_coverage: 219.58
+  capital_adequacy: 13.14
+  dividend_yield: 5.27
+
+# 估值与三表输入
+valuation:
+  shares: 194.06               # 总股本（亿股）
+  income:
+    base_revenue: 1314.42      # 2025全年营收（亿元）
+    revenue_growth: [0.025, 0.035, 0.040]
+    base_net_profit: 426.33    # 2025全年归母净利（亿元）
+    profit_growth: [0.0396, 0.0441, 0.0481]   # 参照机构预测
+    cost_ratio: 0.45
+    expense_ratio: 0.30
+    rd_ratio: 0.03
+  balance:
+    base_assets: 60287.85      # 2026H1总资产（亿元）
+    asset_growth: [0.017, 0.02, 0.02]
+    equity: [4700, 4850, 5000] # 净资产（亿元）
+    roe: [0.105, 0.108, 0.110]
+    roic: [0.015, 0.016, 0.017]
+  cashflow:
+    operating_cf: [3500, 3800, 4100]
+    investing_cf: [-800, -900, -1000]
+    financing_cf: [-2000, -2200, -2400]
+  targets:
+    bvps: 24.15                # 2026E每股净资产（元）
+    target_pe: 6.0
+    target_pb: 0.56
+    wacc: 0.10
+    terminal_growth: 0.03
+    ev_ebitda: 8.0
+    net_debt: 0
+    segments: { 零售银行: 6.5, 对公银行: 4.5, 资金同业: 1.5 }
+  # 银行专项三表模型（银行口径；数据来自2026中报+机构预测，已校准净利≈440亿）
+  bank:
+    shares: 194.06             # 总股本（亿股）
+    income:
+      base_earning_assets: 51000   # 生息资产基数（亿元，估算）
+      earning_asset_growth: [0.015, 0.02, 0.02]
+      nim: [1.80, 1.82, 1.85]      # 净息差(%)，假设企稳微升
+      fee_ratio: 0.19              # 手续费净收入占营收比
+      other_nonint_ratio: 0.15     # 其他非息占营收比
+      cost_income_ratio: [0.29, 0.28, 0.28]   # 成本收入比
+      credit_cost_ratio: [1.20, 1.15, 1.10]   # 信用成本率(%)，不良生成率下行
+      loan_base: 34522.74           # 2026H1贷款本金（亿元）
+      loan_growth: [0.018, 0.02, 0.022]
+      tax_rate: 0.25
+    balance:
+      base_loans: 34522.74
+      loan_growth: [0.018, 0.02, 0.022]
+      base_deposits: 36605.87
+      deposit_growth: [0.02, 0.022, 0.024]
+      base_assets: 60287.85
+      asset_growth: [0.017, 0.02, 0.02]
+      npl_ratio: [1.05, 1.04, 1.03]        # 不良率(%)，改善
+      provision_ratio: [2.30, 2.28, 2.26]  # 拨贷比(%)
+      core_tier1: [9.32, 9.35, 9.38]       # 核心一级资本充足率(%)
+      roe: [0.105, 0.105, 0.106]
+      equity: [4700, 4850, 5000]           # 净资产（亿元）
+    valuation:
+      bvps: 24.15
+      roe: 0.105
+      coe: 0.10
+      g: 0.03
+      hist_target_pb: 0.56
+      dps: 0.50                 # 2026E每股分红（含中期，估算）
+      r: 0.10
+
+# 数据来源清单（示例）
+source:
+  - { item: "收盘价 11.35 / PE 5.07 / PB 0.47", source: "Wind/同花顺", date: "2026-09-29", confidence: "高" }
+  - { item: "26H1营收706.17亿(+1.8%) / 归母净利256.96亿(+3.3%)", source: "2026中报/中证网", date: "2026-08-14", confidence: "高" }
+  - { item: "净息差1.80% / 不良率1.05% / 拨备覆盖率219.58%", source: "2026中报", date: "2026-06-30", confidence: "高" }
+  - { item: "2026E/2027E归母净利预测", source: "东方财富研报", date: "2026-08-25", confidence: "中(研报)" }

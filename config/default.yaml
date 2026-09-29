@@ -1,0 +1,72 @@
+# SFW-10.0 · 生产级配置
+# 所有可调参数集中于此；被分析与估值相关的业务参数应放在数据文件（data/*.yaml）中，
+# 这里只放"引擎/评分/估值/回测"的通用算法参数与阈值。
+
+engine:
+  # 概率云态
+  temperature_default: 0.15       # 默认温度 τ
+  temperature_high_vol: 0.25      # 波动率 > high_volatility_threshold 时使用
+  high_volatility_threshold: 0.30 # 触发高温度的年化波动率阈值
+  # 分形极限网
+  fractal_entropy_threshold: 0.7  # H_d 超过该值触发子循环展开（SFW-10.0 由 0.9 下调至 0.7）
+  fractal_conflict_threshold: 3   # 维度冲突数 >= 该值触发子循环
+  fractal_max_depth: 3            # 嵌套深度上限
+  # L∞ 持续裂变
+  tension_micro_threshold: 0.55   # 微裂变阈值
+  tension_macro_threshold: 0.80   # 宏裂变阈值
+  fission_cooldown: 3             # 冷却期（次）
+  fission_entropy_threshold: 0.95 # 维度熵高于该值触发微裂变
+  fission_conflict_threshold: 3   # 符号冲突数 >= 该值触发微裂变
+  self_correlation_warning: 0.65  # 因子自相关警戒线
+  # 拓扑自我感知
+  topology_focused_volume: 3.0    # V_act < 该值 → 聚焦态
+  topology_diffuse_volume: 7.0    # V_act > 该值 → 弥散态
+  coupling_strong: 0.8            # 耦合矩阵 M > 该值 → 耦合态
+  coupling_anti: -0.8             # M < 该值 → 对抗态
+  # 维度涌现
+  emergence_high_entropy: 0.8     # 高熵维度判定阈值
+  emergence_high_entropy_count: 4 # 高熵维度数 >= 该值触发涌现
+  emergence_min_mutual_info: 0.1  # 互信息 < 该值视为候选
+  emergence_track_cycles: 3       # 跟踪周期数
+
+scoring:
+  # 评分卡：各维度指标权重（权重之和 = 1.0）；维度键与 DIM_NAMES 一致（中文）
+  weights:
+    天:    { policy: 0.30, macro: 0.25, liquidity: 0.25, geopolitics: 0.20 }
+    地:    { pe_percentile: 0.20, pb_percentile: 0.20, roe_trend: 0.20, revenue_growth: 0.15, profit_growth: 0.15, cashflow_quality: 0.10 }
+    人:    { northbound: 0.25, margin_balance: 0.25, main_capital: 0.25, turnover: 0.25 }
+    正:    { ma_arrange: 0.30, macd: 0.25, rsi: 0.20, breakout: 0.25 }
+    反:    { valuation_extreme: 0.30, oversold: 0.25, chip_concentration: 0.25, reversal_signal: 0.20 }
+    合:    { factor_resonance: 0.40, cross_modal: 0.30, signal_strength: 0.30 }
+    归:    { industry_cycle: 0.40, seasonality: 0.30, historical_similar: 0.30 }
+    守:    { debt_ratio: 0.25, interest_bearing_ratio: 0.25, goodwill: 0.20, pledge: 0.15, compliance: 0.15 }
+    进:    { catalyst_strength: 0.30, catalyst_time: 0.25, profit_elasticity: 0.25, consensus: 0.20 }
+  # 银行股专项阈值
+  bank_special:
+    nim:      { plus: 1.75, zero: 1.70 }            # 净息差(%)
+    npl:      { plus: 1.10, zero: 1.30 }            # 不良率(%)
+    provision_coverage: { plus: 200, zero: 150 }    # 拨备覆盖率(%)
+    capital_adequacy: { plus: 13.0, zero: 11.0 }    # 资本充足率(%)
+    dividend_yield: { plus: 4.0, zero: 2.5 }        # 股息率(%)
+
+valuation:
+  # 综合目标价权重。银行股 DCF / EV/EBITDA 适用性差，仅供交叉验证，
+  # 权重设为 0 使其不进入加权综合；加权目标价由 PE/PB/SOTP 构成。
+  weights: { DCF: 0.0, PE: 0.10, PB: 0.50, EVEBITDA: 0.0, SOTP: 0.30 }
+  defaults:
+    target_pe: 6.0
+    target_pb: 0.56
+    wacc: 0.10
+    terminal_growth: 0.03
+    ev_ebitda_multiple: 8.0
+
+backtest:
+  risk_free: 0.02      # 无风险利率（年化）
+  cost: 0.0003         # 单边交易成本
+  seed: 42             # 确定性随机种子（仅用于演示数据）
+
+report:
+  disclaimer: |
+    本分析由 SFW-10.0 认知引擎生成，融合五阶状态空间、全息适配、九维概率云态、
+    认知沙盘推演、概率校准与回测验证。不构成投资建议，不预测涨跌，不承诺收益。
+    具体决策与风险由个人承担。

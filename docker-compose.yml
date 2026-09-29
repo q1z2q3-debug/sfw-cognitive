@@ -1,0 +1,11 @@
+services:
+  sfw:
+    build: .
+    image: sfw-cognitive:10.0
+    container_name: sfw
+    command: ["analyze", "data/pingan_000001.yaml"]
+    volumes:
+      - ./data:/app/data:ro     # 数据文件注入（只读）
+      - ./config:/app/config:ro # 配置注入（只读）
+      - ./output:/app/output    # 报告输出目录
+    restart: "no"

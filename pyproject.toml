@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sfw-cognitive"
+version = "10.0.0"
+description = "股票分析认知固件 SFW-10.0 · 生产级实现（五阶状态空间 / 九维概率云 / 认知沙盘 / 回测闭环）"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "SFW Project" }]
+keywords = ["stock-analysis", "cognitive-engine", "quantitative", "backtest"]
+dependencies = [
+    "numpy>=1.23",
+    "PyYAML>=6.0",
+]
+
+[project.scripts]
+sfw = "sfw.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "ruff>=0.5", "build>=1.0", "mypy>=1.10"]
+data = ["pandas>=1.5", "akshare>=1.10"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+sfw = ["conf/*.yaml", "py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+# 忽略不影响正确性的风格/性能/时区建议，聚焦真实缺陷
+ignore = ["SIM102", "RUF046", "RUF059", "TRY004", "DTZ005"]
