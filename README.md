@@ -12,6 +12,7 @@
 - 存档（Zenodo · DOI 10.5281/zenodo.23040435）：<https://zenodo.org/record/23040435>
 - 认知固件（即用型提示词，全英文 · SFW-12.0，SFW-11.5 的认知升级版）：
   [`firmware/SFW-12.0-cognition-augmented-en.md`](firmware/SFW-12.0-cognition-augmented-en.md)
+  · Zenodo 独立存档 DOI 10.5281/zenodo.23040599 · https://zenodo.org/record/23040599
 
 ---
 

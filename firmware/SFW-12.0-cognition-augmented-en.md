@@ -171,3 +171,5 @@ If already provided, begin online search and analysis directly.
 shipped engine `sfw-cognitive` (PyPI / GitHub / Zenodo DOI 10.5281/zenodo.23040435) implements the
 operational core of this firmware — bank statement template, live market data adapter, and
 CI/CD — so the prompt and the engine stay consistent.
+
+**Zenodo archive (independent DOI)**: 10.5281/zenodo.23040599 · https://zenodo.org/record/23040599
