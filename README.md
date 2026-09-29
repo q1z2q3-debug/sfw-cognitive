@@ -10,6 +10,8 @@
 - PyPI：`pip install sfw-cognitive` → <https://pypi.org/project/sfw-cognitive/>
 - 源码（GitHub，开源）：<https://github.com/q1z2q3-debug/sfw-cognitive>
 - 存档（Zenodo · DOI 10.5281/zenodo.23040435）：<https://zenodo.org/record/23040435>
+- 认知固件（即用型提示词，全英文 · SFW-12.0，SFW-11.5 的认知升级版）：
+  [`firmware/SFW-12.0-cognition-augmented-en.md`](firmware/SFW-12.0-cognition-augmented-en.md)
 
 ---
 
