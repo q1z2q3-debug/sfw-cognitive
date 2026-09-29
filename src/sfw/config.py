@@ -126,7 +126,7 @@ def _load_bundled_default() -> dict[str, Any]:
     """读取打包进包的默认配置（src/sfw/conf/default.yaml）。"""
     try:
         from importlib import resources
-        text = resources.files("sfw").joinpath("conf", "default.yaml").read_text(encoding="utf-8")
+        text = resources.files("sfw").joinpath("conf").joinpath("default.yaml").read_text(encoding="utf-8")
         return yaml.safe_load(text) or {}
     except Exception:  # noqa: BLE001
         return {}
