@@ -49,6 +49,24 @@ sfw fetch sz000001 --name 平安银行 --out data/auto_sz000001.yaml
 自动拉取行情与九维技术面指标；PE/PB/股息率/三表等需人工补充后再分析。
 无 akshare 时该命令会明确报错，不影响其余功能。
 
+### 大模型内化（Dual-System · 可选）
+
+把认知固件对九维状态的判断**内化成语义化快速模式库**（System 1）：重复/邻近状态
+直接命中历史判断（无需重跑完整推理/LLM，System 2），并通过反馈回灌强化置信，
+遵循 **school → internalize → graduate** 的成长曲线，LLM 依赖逐步下降。
+
+```bash
+sfw analyze data/pingan_000001.yaml --internalize    # 分析并把本次判断写入模式库
+sfw internalize status                                # 内化阶段 / 覆盖率 / LLM 依赖度
+sfw internalize learn --state "1,0.9,0,1,-1,0,1,0.8,-1" --input "平安银行" --action "verdict=偏多"
+sfw internalize feedback --hash <hash> --success True  # 回灌成功/失败以强化模式
+sfw internalize reset                                  # 清空模式库
+```
+
+- 模式库默认 `output/sfw_patterns.json`（已 gitignore）。
+- 可选：委托 btcu-harness 的 System 1 模式库获得完整保真——
+  `pip install "sfw-cognitive[btcu]"`（模式匹配语义对齐其 `System1PatternLibrary`）。
+
 ### 自检（单元测试）
 
 ```bash
@@ -78,6 +96,7 @@ sfw-10.0-prod/
 │   ├── valuation.py        # 通用三表预测 + 多方法估值 + 敏感性
 │   ├── bank_model.py       # 银行专用三表模板 + 银行敏感性 + PB-ROE/DDM 专项估值
 │   ├── market_data.py      # 实时行情接入（akshare 适配，可选依赖、优雅降级）
+│   ├── internalize.py      # 大模型内化：双系统 S1模式库/S2推演 + 反馈回灌 + 毕业判定
 │   ├── backtest.py         # 回测指标 + 组合相关性
 │   ├── data.py             # 输入数据模式、加载与校验
 │   ├── report.py           # SFW-10.0 报告渲染与流水线编排
@@ -100,7 +119,7 @@ sfw-10.0-prod/
 - **缺失数据显式处理**：缺失指标按中性(0)处理，并在报告中标注"数据不可得"，
   不静默失败、不编造数值。
 - **可测试**：`tests/` 覆盖核心、评分、估值、银行模型、行情、数据校验与
-  完整流水线（当前 49 个用例）。
+  完整流水线 + 大模型内化（当前 60 个用例）。
 - **CI/CD**：GitHub Actions（多 Python 版本 lint + 测试 + 构建）、Makefile、
   Dockerfile（多阶段、非 root、HEALTHCHECK）、docker-compose。
 - **合规**：报告固定输出免责声明；回测默认使用确定性随机模拟数据并明确标注。
