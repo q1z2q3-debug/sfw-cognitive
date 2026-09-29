@@ -7,9 +7,10 @@
 > 不预测涨跌，不承诺收益**。具体决策与风险由个人承担。
 
 **发布与存档**
-- PyPI：`pip install sfw-cognitive` → <https://pypi.org/project/sfw-cognitive/>
+- PyPI：`pip install sfw-cognitive` → <https://pypi.org/project/sfw-cognitive/>（最新 10.1.0）
 - 源码（GitHub，开源）：<https://github.com/q1z2q3-debug/sfw-cognitive>
-- 存档（Zenodo · DOI 10.5281/zenodo.23040435）：<https://zenodo.org/record/23040435>
+- 存档（Zenodo · 引擎 DOI 10.5281/zenodo.23040435）：<https://zenodo.org/record/23040435>
+- 大模型内化升级（Zenodo · 独立 DOI 10.5281/zenodo.23041453）：<https://zenodo.org/record/23041453>
 - 认知固件（即用型提示词，全英文 · SFW-12.0，SFW-11.5 的认知升级版）：
   [`firmware/SFW-12.0-cognition-augmented-en.md`](firmware/SFW-12.0-cognition-augmented-en.md)
   · Zenodo 独立存档 DOI 10.5281/zenodo.23040599 · https://zenodo.org/record/23040599
