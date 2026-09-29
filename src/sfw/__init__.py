@@ -14,7 +14,7 @@
 详见 README.md。
 """
 
-__version__ = "10.0.0"
+__version__ = "10.1.0"
 
 from .config import SFWConfig, load_config
 from .core import (  # noqa: F401
