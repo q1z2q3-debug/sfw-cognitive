@@ -126,7 +126,10 @@ def generate_report(res: AnalysisResult) -> str:
     L.append(f"- 天地人评分：天={t:+.2f} 地={d:+.2f} 人={r:+.2f}")
     L.append(f"- 本卦：**{bagua}**（启发式演绎层）")
 
-    six = tuple(_triline(s) for s in (t, d, r, scores["正"], scores["反"], scores["合"]))
+    six: tuple[int, int, int, int, int, int] = (
+        _triline(t), _triline(d), _triline(r), _triline(scores["正"]),
+        _triline(scores["反"]), _triline(scores["合"]),
+    )
     L.append("\n### 2⁶=64：六十四卦")
     L.append(f"- 六爻（初→上，体/用）：{encode_64gua(six)}")
 

@@ -115,7 +115,7 @@ class ProbabilityCloud:
             return "偏空"
         return "悬置"
 
-    def to_dict(self) -> dict[str, float]:
+    def to_dict(self) -> dict[str, float | str]:
         return {
             "p(-1)": float(self.probs[0]),
             "p(0)": float(self.probs[1]),
@@ -500,7 +500,7 @@ class SFWEngine:
             main = Phase.TRANSFORM_B
 
         transfer = compute_transfer_probability(main, info_rate, decay_rate, reorg, output_pressure, reflect_depth)
-        max_next = max(transfer, key=transfer.get)
+        max_next = max(transfer.items(), key=lambda kv: kv[1])[0]
         max_depth = self.cfg.engine("fractal_max_depth", 3)
 
         self.fractal_state = FractalState(

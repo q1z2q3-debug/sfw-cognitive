@@ -29,8 +29,8 @@ jobs:
       - name: Lint (ruff)
         run: ruff check src/ tests/
 
-      - name: Type-check (mypy, 仅提示不阻断)
-        run: mypy src/sfw --ignore-missing-imports || echo "::warning::mypy 存在提示，非阻断"
+      - name: Type-check (mypy, 阻断)
+        run: mypy src/sfw --ignore-missing-imports
 
       - name: Test (pytest)
         run: python -m pytest tests/
